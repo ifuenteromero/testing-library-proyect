@@ -10,6 +10,9 @@ test('displays the primary language of the repository', () => {
 		language,
 	};
 	render(<RepositoriesSummary repository={repository} />);
-	const languageText = screen.getByText(language);
-	expect(languageText).toBeInTheDocument();
+	for (const key in repository) {
+		const value = repository[key];
+		const element = screen.getByText(new RegExp(value));
+		expect(element).toBeInTheDocument();
+	}
 });
