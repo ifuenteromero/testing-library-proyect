@@ -2,6 +2,12 @@ import { render, screen } from '@testing-library/react';
 import RepositoriesListItem from './RepositoriesListItem';
 import { MemoryRouter } from 'react-router';
 
+jest.mock('../tree/FileIcon', () => {
+	return () => {
+		return <img aria-label='JavaScript' />;
+	};
+});
+
 const rendeComponent = () => {
 	const repository = {
 		full_name: 'facebook/react',
@@ -42,7 +48,7 @@ const rendeComponent = () => {
 	);
 };
 
-test('shows a link to the github homepage for this repository', async () => {
+test('1st approach: shows a link to the github homepage for this repository', async () => {
 	rendeComponent();
 	// console.log('primero');
 	// screen.debug();
@@ -58,3 +64,9 @@ test('shows a link to the github homepage for this repository', async () => {
 // 			resolve();
 // 		}, 4000);
 // 	});
+
+test('3rd approach: shows a link to the github homepage for this repository', async () => {
+	rendeComponent();
+	// module mock
+	// screen.debug();
+});
