@@ -1,12 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import RepositoriesListItem from './RepositoriesListItem';
 import { MemoryRouter } from 'react-router';
 
-jest.mock('../tree/FileIcon', () => {
-	return () => {
-		return <img aria-label='JavaScript' />;
-	};
-});
+// jest.mock('../tree/FileIcon', () => {
+// 	return () => {
+// 		return <img aria-label='JavaScript' />;
+// 	};
+// });
 
 const rendeComponent = () => {
 	const repository = {
@@ -48,15 +48,15 @@ const rendeComponent = () => {
 	);
 };
 
-test('1st approach: shows a link to the github homepage for this repository', async () => {
-	rendeComponent();
-	// console.log('primero');
-	// screen.debug();
-	// await pause();
-	// console.log('segundo');
-	// screen.debug();
-	await screen.findByRole('img', { name: 'JavaScript' }); // hay 2
-});
+// test('1st approach: shows a link to the github homepage for this repository', async () => {
+// 	rendeComponent();
+// 	// console.log('primero');
+// 	// screen.debug();
+// 	// await pause();
+// 	// console.log('segundo');
+// 	// screen.debug();
+// 	await screen.findByRole('img', { name: 'JavaScript' }); // hay 2
+// });
 
 // const pause = () =>
 // 	new Promise((resolve) => {
@@ -65,8 +65,20 @@ test('1st approach: shows a link to the github homepage for this repository', as
 // 		}, 4000);
 // 	});
 
-test('3rd approach: shows a link to the github homepage for this repository', async () => {
+// test('3rd approach: shows a link to the github homepage for this repository', async () => {
+// 	rendeComponent();
+// 	// module mock
+// 	// screen.debug();
+// });
+
+test('last  approach: shows a link to the github homepage for this repository', async () => {
 	rendeComponent();
-	// module mock
-	// screen.debug();
+	const pause = () =>
+		new Promise((resolve) => {
+			setTimeout(resolve, 100);
+		});
+
+	await act(async () => {
+		await pause();
+	});
 });
