@@ -45,7 +45,7 @@ describe('when user is not signed in', () => {
 
 const pause = () => new Promise((resolve) => setTimeout(resolve, 100));
 
-describe('when user is signed in', () => {
+describe.only('when user is signed in', () => {
 	// createServer() => GET api/user => { user: { id: 2, email: test@gmail.com }l }
 
 	createServer([
