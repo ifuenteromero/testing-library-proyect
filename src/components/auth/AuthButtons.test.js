@@ -45,20 +45,27 @@ describe('when user is not signed in', () => {
 
 const pause = () => new Promise((resolve) => setTimeout(resolve, 100));
 
-// describe('when user is signed in', () => {
-// 	// createServer() => GET api/user => { user: { id: 2, email: test@gmail.com }l }
+describe('when user is signed in', () => {
+	// createServer() => GET api/user => { user: { id: 2, email: test@gmail.com }l }
 
-// 	createServer([
-// 		{
-// 			path: '/api/user',
-// 			response: () => ({ user: { id: 3, email: 'test@gmail.com' } }),
-// 		},
-// 	]);
+	createServer([
+		{
+			path: '/api/user',
+			response: () => ({ user: { id: 3, email: 'test@gmail.com' } }),
+		},
+	]);
 
-// 	test('sign in and sign up are not visible', async () => {
-// 		console.log('test 3');
-// 	});
-// 	test('sign out is visible', async () => {
-// 		console.log('test 4');
-// 	});
-// });
+	test('sign in and sign up are not visible', async () => {
+		await renderComponent();
+		const signInButton = screen.queryByRole('link', { name: /sign in/i });
+		const signUpButton = screen.queryByRole('link', { name: /sign up/i });
+		expect(signInButton).not.toBeInTheDocument();
+		expect(signUpButton).not.toBeInTheDocument();
+	});
+	test('sign out is visible', async () => {
+		await renderComponent();
+		const signOutButton = screen.getByRole('link', { name: /sign out/i });
+		expect(signOutButton).toBeInTheDocument();
+		expect(signOutButton).toHaveAttribute('href', '/signout');
+	});
+});
