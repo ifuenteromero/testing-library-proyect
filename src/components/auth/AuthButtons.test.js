@@ -2,15 +2,18 @@ import { render, screen } from '@testing-library/react';
 import createServer from '../../tests/createServer';
 import AuthButtons from './AuthButtons';
 import { BrowserRouter } from 'react-router-dom';
+import { SWRConfig } from 'swr';
 // Añadido el debugger en el código se abre una pestaña de chrome y en la consola
 // se ejecuta npm run:debug
 // about:inspect
 
 const renderComponent = async () => {
 	render(
-		<BrowserRouter>
-			<AuthButtons />
-		</BrowserRouter>
+		<SWRConfig value={{ provider: () => new Map() }}>
+			<BrowserRouter>
+				<AuthButtons />
+			</BrowserRouter>
+		</SWRConfig>
 	);
 	await screen.findAllByRole('link');
 };
