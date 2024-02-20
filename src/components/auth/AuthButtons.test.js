@@ -2,6 +2,9 @@ import { render, screen } from '@testing-library/react';
 import createServer from '../../tests/createServer';
 import AuthButtons from './AuthButtons';
 import { BrowserRouter } from 'react-router-dom';
+// Añadido el debugger en el código se abre una pestaña de chrome y en la consola
+// se ejecuta npm run:debug
+// about:inspect
 
 const renderComponent = async () => {
 	render(
@@ -22,7 +25,8 @@ describe('when user is not signed in', () => {
 		},
 	]);
 
-	test('sign in and sign up are visible', async () => {
+	test.only('sign in and sign up are visible', async () => {
+		debugger;
 		await renderComponent();
 		const signInButton = screen.getByRole('link', {
 			name: /sign in/i,
@@ -45,7 +49,7 @@ describe('when user is not signed in', () => {
 
 const pause = () => new Promise((resolve) => setTimeout(resolve, 100));
 
-describe.only('when user is signed in', () => {
+describe('when user is signed in', () => {
 	// createServer() => GET api/user => { user: { id: 2, email: test@gmail.com }l }
 
 	createServer([
@@ -55,7 +59,8 @@ describe.only('when user is signed in', () => {
 		},
 	]);
 
-	test('sign in and sign up are not visible', async () => {
+	test.only('sign in and sign up are not visible', async () => {
+		debugger;
 		await renderComponent();
 		const signInButton = screen.queryByRole('link', { name: /sign in/i });
 		const signUpButton = screen.queryByRole('link', { name: /sign up/i });
