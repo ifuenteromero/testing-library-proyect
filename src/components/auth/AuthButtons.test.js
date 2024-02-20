@@ -21,12 +21,14 @@ describe('when user is not signed in', () => {
 	createServer([
 		{
 			path: '/api/user',
-			response: () => ({ user: null }),
+			response: () => {
+				console.log('NOT LOGGED IN');
+				return { user: null };
+			},
 		},
 	]);
 
-	test.only('sign in and sign up are visible', async () => {
-		debugger;
+	test('sign in and sign up are visible', async () => {
 		await renderComponent();
 		const signInButton = screen.getByRole('link', {
 			name: /sign in/i,
@@ -55,12 +57,14 @@ describe('when user is signed in', () => {
 	createServer([
 		{
 			path: '/api/user',
-			response: () => ({ user: { id: 3, email: 'test@gmail.com' } }),
+			response: () => {
+				console.log('LOGGED IN');
+				return { user: { id: 3, email: 'test@gmail.com' } };
+			},
 		},
 	]);
 
-	test.only('sign in and sign up are not visible', async () => {
-		debugger;
+	test('sign in and sign up are not visible', async () => {
 		await renderComponent();
 		const signInButton = screen.queryByRole('link', { name: /sign in/i });
 		const signUpButton = screen.queryByRole('link', { name: /sign up/i });
