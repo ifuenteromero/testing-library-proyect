@@ -12,7 +12,6 @@ const createServer = (handlerConfig) => {
 	const server = setupServer(...handlers);
 	beforeAll(() => {
 		server.listen();
-		console.log('Server is listening');
 	});
 
 	afterEach(() => {
@@ -21,7 +20,6 @@ const createServer = (handlerConfig) => {
 
 	afterAll(() => {
 		server.close();
-		console.log('Server is closed');
 	});
 };
 

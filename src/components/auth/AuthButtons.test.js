@@ -1,4 +1,16 @@
+import { render, screen } from '@testing-library/react';
 import createServer from '../../tests/createServer';
+import AuthButtons from './AuthButtons';
+import { BrowserRouter } from 'react-router-dom';
+
+const renderComponent = async () => {
+	render(
+		<BrowserRouter>
+			<AuthButtons />
+		</BrowserRouter>
+	);
+	await screen.findAllByRole('link');
+};
 
 describe('when user is not signed in', () => {
 	// createServer() => GET api/user => { user: null }
@@ -11,27 +23,42 @@ describe('when user is not signed in', () => {
 	]);
 
 	test('sign in and sign up are visible', async () => {
-		console.log('test 1');
+		await renderComponent();
+		const signInButton = screen.getByRole('link', {
+			name: /sign in/i,
+		});
+		const signUpButton = screen.getByRole('link', {
+			name: /sign up/i,
+		});
+		expect(signInButton).toBeInTheDocument();
+		expect(signInButton).toHaveAttribute('href', '/signin');
+		expect(signUpButton).toBeInTheDocument();
+		expect(signUpButton).toHaveAttribute('href', '/signup');
 	});
 	test('sign out is not visible', async () => {
-		console.log('test 2');
+		renderComponent();
+
+		const signOutButton = screen.queryByRole('link', { name: /sign out/i });
+		expect(signOutButton).not.toBeInTheDocument();
 	});
 });
 
-describe('when user is signed in', () => {
-	// createServer() => GET api/user => { user: { id: 2, email: test@gmail.com }l }
+const pause = () => new Promise((resolve) => setTimeout(resolve, 100));
 
-	createServer([
-		{
-			path: '/api/user',
-			response: () => ({ user: { id: 3, email: 'test@gmail.com' } }),
-		},
-	]);
+// describe('when user is signed in', () => {
+// 	// createServer() => GET api/user => { user: { id: 2, email: test@gmail.com }l }
 
-	test('sign in and sign up are not visible', async () => {
-		console.log('test 3');
-	});
-	test('sign out is visible', async () => {
-		console.log('test 4');
-	});
-});
+// 	createServer([
+// 		{
+// 			path: '/api/user',
+// 			response: () => ({ user: { id: 3, email: 'test@gmail.com' } }),
+// 		},
+// 	]);
+
+// 	test('sign in and sign up are not visible', async () => {
+// 		console.log('test 3');
+// 	});
+// 	test('sign out is visible', async () => {
+// 		console.log('test 4');
+// 	});
+// });
